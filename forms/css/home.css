@@ -1,0 +1,130 @@
+.card-body {
+    height: 150px;
+}
+
+.card {
+    height: 100%;
+    transition: all .2s ease-in-out;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(210, 32, 32, 0.2);
+}
+
+.card .card-img-top {
+    object-fit: cover;
+    height: 250px;
+}
+
+.card .card-body {
+    height: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1rem;
+}
+
+.card .card-body p {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-bottom: 0;
+}
+
+.card .card-body a {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-decoration: none;
+    color: #000;
+    transition: color .2s ease-in-out;
+}
+
+.card .card-body a:hover {
+    color: #007bff;
+}
+
+.navbar-nav {
+    display: table;
+    width: 100%;
+    margin: 0;
+}
+
+/* Set the height of the parent container */
+.parent {
+    height: 100vh;
+}
+
+/* Center the child elements horizontally and vertically */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Add some margin to the top and bottom of the row */
+.row {
+    margin-top: 20px;
+    margin-bottom: 5px;
+}
+
+/* Add a background color and padding to the card */
+.card {
+    background-color: rgb(255, 255, 255);
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Add some margin to the bottom of the card */
+.card+.card {
+    margin-top: 10px;
+}
+
+.card {
+    width: 100%;
+    border: none;
+    box-shadow: none;
+    text-align: center;
+}
+
+.card-body {
+    padding: 10px;
+}
+
+#data-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.col-md-3 {
+    flex: 1 0 25%;
+    max-width: 0%;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+
+/* Add a hover effect to the card */
+.card:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+    transform: translateY(-5px);
+}
+
+/* Style the card title and description */
+.card-title {
+    font-size: 20px;
+    font-weight: bolder;
+    font-variant: inherit;
+    font-style: normal;
+    color: #000;
+}
+
+.card-title.single-word {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.card-text {
+    font-size: 14px;
+}

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>User Profile</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $.ajax({
+          url: "http://localhost:8050/profile",
+          type: "GET",
+          headers: {
+            "Authorization": sessionStorage.getItem("accessToken")
+          },
+          success: function(response) {
+            $("#txtusername").val(response[0].Username);
+            $("#txtpassword").val(response[0].Password);
+            $("#txtemail").val(response[0].Email);
+            $("#txtname").val(response[0].Name);
+            $("#txtgender").val(response[0].Gender);
+            $("#txtmobile").val(response[0].Mobile);
+            $("#txtimgurl").val(response[0].ImageURL);
+            $("#txtaddress").val(response[0].Address);
+          },
+          error: function(xhr, status, error) {
+            console.error(xhr.responseText);
+          }
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <form>
+      <label>Username:</label>
+      <input type="text" id="txtusername"><br>
+
+      <label>Password:</label>
+      <input type="password" id="txtpassword"><br>
+
+      <label>Email:</label>
+      <input type="email" id="txtemail"><br>
+
+      <label>Name:</label>
+      <input type="text" id="txtname"><br>
+
+      <label>Gender:</label>
+      <input type="text" id="txtgender"><br>
+
+      <label>Mobile:</label>
+      <input type="text" id="txtmobile"><br>
+
+      <label>Image URL:</label>
+      <input type="text" id="txtimgurl"><br>
+
+      <label>Address:</label>
+      <textarea id="txtaddress"></textarea><br>
+
+      <button type="submit">Update</button>
+    </form>
+  </body>
+</html>

@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>TecKart Home</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="apple-touch-icon" href="assets/img/apple-icon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="assets/img/images (1).jpeg">
+
+    <link rel='stylesheet' type='text/css' media='screen' href='./assets/css/style.css'>
+    <!-- bootstrap css -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!-- bootstrap js -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/templatemo.css">
+    <link rel="stylesheet" href="assets/css/custom.css">
+    <link rel="stylesheet" href="css/profile.css">
+
+    <!-- Load fonts style after rendering the layout styles -->
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
+    <link rel="stylesheet" href="assets/css/fontawesome.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light shadow fixed-top">
+        <div class="container-fluid d-flex justify-content-between align-items-center">
+
+            <a class="navbar-brand text-success logo h1 align-self-center" href="homepage.html">
+                TecKart
+            </a>
+
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
+                data-bs-target="#templatemo_main_nav" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="align-self-center collapse navbar-collapse flex-fill  d-lg-flex justify-content-lg-between"
+                id="templatemo_main_nav">
+                <div class="flex-fill">
+                    <ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="homepage.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="about.html">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="shop.html">Shop</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="contact" href="#">Contact</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="navbar align-self-center d-flex">
+                    <div class="d-lg-none flex-sm-fill mt-3 mb-4 col-7 col-sm-auto pr-3">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Search ...">
+                            <div class="input-group-text">
+                                <i id="btnserach" class="fa fa-fw fa-search"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a class="nav-icon d-none d-lg-inline" id="btnsearch" href="#" data-bs-toggle="modal"
+                        data-bs-target="#templatemo_search">
+                        <i class="fa fa-fw fa-search text-dark mr-2"></i>
+                    </a>
+                    <a class="nav-icon position-relative text-decoration-none" href="cart.html">
+                        <i class="fa fa-fw fa-cart-arrow-down text-dark mr-1"></i>
+                        <span
+                            class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark"></span>
+                    </a>
+
+                    <a class="nav-icon position-relative text-decoration-none" href="userprofile.html">
+
+                        <div id="username-display"></div>
+                    </a>
+                    <a class="nav-icon position-relative text-decoration-none">
+                        <div id="login-logout-container"></div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="container my-5">
+		<div class="profile-img">
+			<img id="user-image" src="" alt="Avatar">
+		</div>
+		<div class="profile-container">
+			<div class="profile-info">
+				<div class="form-group">
+					<label>Username:</label>
+					<span id="txtusername"></span>
+				</div>
+				<div class="form-group">
+					<label>Email:</label>
+					<span id="txtemail"></span>
+				</div>
+				<div class="form-group">
+					<label>Name:</label>
+					<span id="txtname"></span>
+				</div>
+				<div class="form-group">
+					<label>Gender:</label>
+					<span id="txtgender"></span>
+				</div>
+				<div class="form-group">
+					<label>Mobile:</label>
+					<span id="txtmobile"></span>
+				</div>
+				<div class="form-group">
+					<label>Address:</label>
+					<span id="txtaddress"></span>
+				</div>
+				<button type="button" class="btn btn-update" id="btnupdate">Update Profile</button>
+			</div>
+		</div>
+	</div>
+    <div class="error-box" id="errorbox">
+        <div class="close" href="#" id="closeerror">&times;</div>
+        <div id="errortxt"></div>
+    </div>
+    <footer class="bg-dark" id="tempaltemo_footer">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-md-4 pt-5">
+                    <h2 class="h2 text-success border-bottom pb-3 border-light logo">TecKart</h2>
+                    <ul class="list-unstyled text-light footer-link-list">
+                        <li>
+                            <i class="fas fa-map-marker-alt fa-fw"></i>
+                            510/511, Shivalik Shilp 2, Judges Bunglow Rd, Vastrapur, Ahmedabad, Gujarat 380015
+                        </li>
+                        <li>
+                            <i class="fa fa-phone fa-fw"></i>
+                            <a class="text-decoration-none" href="tel:010-020-0340">077779 07777</a>
+                        </li>
+                        <li>
+                            <i class="fa fa-envelope fa-fw"></i>
+                            <a class="text-decoration-none" href="mailto:info@company.com">hr@tecblic.com</a>
+                        </li>
+                    </ul>
+                </div>
+
+
+
+                <div class="col-md-6 pt-5">
+                    <h2 class="h2 text-light border-bottom pb-3 border-light">Further Info</h2>
+                    <ul class="list-unstyled text-light footer-link-list">
+                        <li><a class="text-decoration-none" href="homepage.html">Home</a></li>
+                        <li><a class="text-decoration-none" href="aboutpage.html">About Us</a></li>
+                        <li><a class="text-decoration-none" href="shop.html">Shop</a></li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="row text-light mb-4">
+                <div class="col-12 mb-3">
+                    <div class="w-100 my-3 border-top border-light"></div>
+                </div>
+                <div class="col-auto me-auto">
+                    <ul class="list-inline text-left footer-icons">
+
+                        <li class="list-inline-item border border-light rounded-circle text-center">
+                            <a class="text-light text-decoration-none" target="_blank"
+                                href="https://www.instagram.com/tecblic"><i class="fab fa-instagram fa-lg fa-fw"></i></a>
+                        </li>
+                        <li class="list-inline-item border border-light rounded-circle text-center">
+                            <a class="text-light text-decoration-none" target="_blank" href="https://twitter.com/tecblic"><i
+                                    class="fab fa-twitter fa-lg fa-fw"></i></a>
+                        </li>
+                        <li class="list-inline-item border border-light rounded-circle text-center">
+                            <a class="text-light text-decoration-none" target="_blank"
+                                href="https://www.linkedin.com/in/tecblic/"><i class="fab fa-linkedin fa-lg fa-fw"></i></a>
+                        </li>
+                    </ul>
+            </div>
+            </div>
+        </div>
+
+        <div class="w-100 bg-black py-3">
+            <div class="container">
+                <div class="row pt-2">
+                    <div class="col-12">
+                        <p class="text-left text-light">
+                            Copyright &copy; 2021 teckart
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    </div>
+    <link rel="stylesheet" href="css/profile.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script src='./assets/js/main.js'></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            token = sessionStorage.getItem('accesstoken')
+            if (token == null) {
+                window.location.href = "login.html";
+            }
+
+            const username = localStorage.getItem('username');
+            $('#btnsearch').click(function () {
+                alert("comming-soon!")
+            });
+            $('#btnupdate').click(function () {
+                window.location.href = "update_profile.html"
+            });
+            $('#contact').click(function () {
+                alert("comming soon!")
+            });
+            $('#bt').click(function () {
+                alert("comming soon!")
+            });
+
+
+            if (username) {
+                const logoutBtn = $('<button class="btn btn-primary" id="logout-btn" href="homepage.html">Logout</button>');
+                logoutBtn.on('click', function () {
+
+                    localStorage.removeItem('username');
+                    window.location.href = "homepage.html";
+
+                });
+                $('#login-logout-container').append(logoutBtn);
+                $('#username-display').html(`Hello, ${username}!`);
+            } else {
+                const loginBtn = $('<a class="btn btn-primary" href="login.html">Login</a>');
+                $('#login-logout-container').append(loginBtn);
+            }
+
+        })
+
+        $.ajax({
+            url: "http://localhost:8050/profile",
+            method: 'GET',
+            headers: {
+                'Authorization': sessionStorage.getItem('accesstoken')
+            },
+            success: function (data) {
+                $('#txtimgurl').val(data[0].imageurl ? data[0].imageurl.String : "");
+                $('#txtusername').text(data[0].username);
+                $('#txtemail').text(data[0].email);
+                $('#txtname').text(data[0].name ? data[0].name.String : "");
+                $('#txtgender').text(data[0].gender ? data[0].gender.String : "");
+                $('#txtmobile').text(data[0].mobile ? data[0].mobile.String : "");
+                $('#txtaddress').text(data[0].address ? data[0].address.String : "");
+
+                $('#user-image').attr('src', data[0].imageurl.String);
+            },
+            error: function (xhr, status, error) {
+                console.log(xhr.responseText);
+            }
+        });
+        $("#closeerror").click(function () {
+            $("#errorbox").hide();
+        });
+
+    </script>
+</body>
+
+</html>

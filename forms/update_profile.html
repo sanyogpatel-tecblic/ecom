@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>TecKart Home</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="apple-touch-icon" href="assets/img/apple-icon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="assets/img/images (1).jpeg">
+
+    <link rel='stylesheet' type='text/css' media='screen' href='./assets/css/style.css'>
+    <!-- bootstrap css -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!-- bootstrap js -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/templatemo.css">
+    <link rel="stylesheet" href="assets/css/custom.css">
+
+    <!-- Load fonts style after rendering the layout styles -->
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
+    <link rel="stylesheet" href="assets/css/fontawesome.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf/notyf.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/notyf/notyf.min.js"></script>
+    <style>
+        body {
+            padding-top: 60px;
+        }
+
+        @media (max-width: 979px) {
+            body {
+                padding-top: 0px;
+            }
+        }
+
+
+
+        .navbar-nav {
+            display: table;
+            width: 100%;
+            margin: 0;
+        }
+
+        body {
+            background-color: #f7f7f7;
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            font-size: 36px;
+            color: #444444;
+            margin-bottom: 30px;
+        }
+
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin: auto;
+            margin-bottom: 20px;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .profile-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .profile-name {
+            font-size: 24px;
+            font-weight: bold;
+            color: #444444;
+            margin-bottom: 10px;
+        }
+
+        .profile-info {
+            font-size: 18px;
+            color: #555555;
+            margin-bottom: 20px;
+        }
+
+        .profile-info span {
+            font-weight: bold;
+            color: #444444;
+            margin-right: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .btn-update {
+            background-color: #444444;
+            color: #ffffff;
+            border: none;
+            padding: 10px 30px;
+            font-size: 18px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-update:hover {
+            background-color: #ffffff;
+            color: #444444;
+            border: 2px solid #444444;
+            cursor: pointer;
+        }
+
+        .error-box {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #ffeeee;
+            color: #cc0000;
+            border: 1px solid #cc0000;
+            border-radius: 5px;
+            display: none;
+        }
+
+        .close {
+            position: absolute;
+            right: 10px;
+            top: 5px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #cc0000;
+            cursor: pointer;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .profile-img {
+            position: relative;
+            margin-bottom: 1rem;
+        }
+
+        .profile-img img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 3px solid #fff;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .edit-link {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            text-align: center;
+            padding: 0.5rem;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .edit-link a {
+            color: #ffffff;
+        }
+
+        .profile-container {
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-control {
+            width: 100%;
+        }
+
+        .btn-update,
+        .btn-back {
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        .btn-update {
+            background-color: #010911;
+            color: #fff;
+        }
+
+        .btn-back {
+            background-color: #6c757d;
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light shadow fixed-top">
+        <div class="container-fluid d-flex justify-content-between align-items-center">
+
+            <a class="navbar-brand text-success logo h1 align-self-center" href="homepage.html">
+                TecKart
+            </a>
+
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
+                data-bs-target="#templatemo_main_nav" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="align-self-center collapse navbar-collapse flex-fill  d-lg-flex justify-content-lg-between"
+                id="templatemo_main_nav">
+                <div class="flex-fill">
+                    <ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="homepage.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="about.html">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="shop.html">Shop</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="contact" href="#">Contact</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="navbar align-self-center d-flex">
+                    <div class="d-lg-none flex-sm-fill mt-3 mb-4 col-7 col-sm-auto pr-3">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Search ...">
+                            <div class="input-group-text">
+                                <i id="btnserach" class="fa fa-fw fa-search"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a class="nav-icon d-none d-lg-inline" id="btnsearch" href="#" data-bs-toggle="modal"
+                        data-bs-target="#templatemo_search">
+                        <i class="fa fa-fw fa-search text-dark mr-2"></i>
+                    </a>
+                    <a class="nav-icon position-relative text-decoration-none" href="cart.html">
+                        <i class="fa fa-fw fa-cart-arrow-down text-dark mr-1"></i>
+                        <span
+                            class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark"></span>
+                    </a>
+
+                    <a class="nav-icon position-relative text-decoration-none" href="userprofile.html">
+
+                        <div id="username-display"></div>
+                    </a>
+                    <a class="nav-icon position-relative text-decoration-none">
+                        <div id="login-logout-container"></div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="container my-5">
+        <div class="profile-img">
+            <img id="user-image" src="https://via.placeholder.com/150" alt="Avatar">
+            <div class="edit-link">
+                <a href="#" id="picupdate">Edit Profile Picture</a>
+                <input type="file" id="fileInput" style="display:none;" onchange="readURL(this);">
+            </div>
+        </div>
+
+        <div class="profile-container">
+            <form>
+                <div class="form-group">
+                    <label for="txtusername">Username:</label>
+                    <input type="text" class="form-control" id="txtusername" />
+                </div>
+                <div class="form-group">
+                    <label for="txtemail">Email:</label>
+                    <input type="text" class="form-control" id="txtemail" />
+                </div>
+                <div class="form-group">
+                    <label for="txtname">Name:</label>
+                    <input type="text" class="form-control" id="txtname" />
+                </div>
+                <div class="form-group">
+                    <label for="txtgender">Gender:</label>
+                    <input type="text" class="form-control" id="txtgender" />
+                </div>
+                <div class="form-group">
+                    <label for="txtmobile">Mobile:</label>
+                    <input type="text" class="form-control" id="txtmobile" />
+                </div>
+                <div class="form-group">
+                    <label for="txtaddress">Address:</label>
+                    <input type="text" class="form-control" id="txtaddress" />
+                </div>
+                <button type="button" class="btn btn-update" id="btnupdate">Update</button>
+                <button type="button" class="btn btn-back" id="btnback">Back</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="js files/toaster.js"></script>
+    <script src='./assets/js/main.js'></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+
+            token = sessionStorage.getItem('accesstoken')
+            if (token == null) {
+                window.location.href = "login.html";
+            }
+
+            const username = localStorage.getItem('username');
+            $('#btnsearch').click(function () {
+                alert("comming soon!")
+            });
+
+            $('#contact').click(function () {
+                alert("comming soon!")
+            });
+            $('#bt').click(function () {
+                alert("comming soon!")
+            });
+            $('#btnback').click(function () {
+                window.location.href = "userprofile.html";
+            });
+            $('#picupdate').click(function (e) {
+                e.preventDefault();
+                $('#fileInput').trigger('click');
+            });
+
+            $('#fileInput').change(function () {
+                // Handle the selected file
+                // This code will execute when a file is selected in the file manager
+            });
+
+            if (username) {
+                const logoutBtn = $('<button class="btn btn-primary" id="logout-btn" href="homepage.html">Logout</button>');
+                logoutBtn.on('click', function (response) {
+                    localStorage.removeItem('username');
+                    sessionStorage.removeItem('accesstoken', response.accesstoken);
+                    window.location.href = "homepage.html";
+                });
+                $('#login-logout-container').append(logoutBtn);
+                $('#username-display').html(`Hello, ${username}!`);
+            } else {
+                const loginBtn = $('<a class="btn btn-primary" href="login.html">Login</a>');
+                $('#login-logout-container').append(loginBtn);
+            }
+
+            $('#btnpersonal').click(function () {
+                window.location.href = "personal_info.html";
+            })
+            $('#fileInput').change(function () {
+                let reader = new FileReader(); //read the contents of the selected file.
+
+                reader.onload = (e) => {
+                    $('#user-image').attr('src', e.target.result); //taget.result contains the data URL of the selected image //attr method to set the src attribute of an image element with an ID of user-image
+                }
+                reader.readAsDataURL(this.files[0]); //reads the contents of the selected file
+            })
+
+            $.ajax({
+                url: "http://localhost:8050/profile",
+                method: 'GET',
+                headers: {
+                    'Authorization': sessionStorage.getItem('accesstoken')
+                },
+                success: function (data) {
+                    $('#txtimgurl').val(data[0].imageurl ? data[0].imageurl.String : "");
+                    document.getElementById('txtusername').value = data[0].username;
+                    document.getElementById('txtemail').value = data[0].email;
+                    document.getElementById('txtname').value = data[0].name ? data[0].name.String : null;
+                    document.getElementById('txtgender').value = data[0].gender ? data[0].gender.String : null;
+                    document.getElementById('txtmobile').value = data[0].mobile ? data[0].mobile.String : null;
+                    document.getElementById('txtaddress').value = data[0].address ? data[0].address.String : null;
+                    // document.getElementById('user-image').value = data[0].imageurl.String;
+                    $('#user-image').attr('src', data[0].imageurl.String);
+                },
+                error: function (xhr, status, error) {
+                    console.log(xhr.responseText);
+                }
+            });
+            $('#btnupdate').click(function () {
+                var form_data = new FormData();
+                form_data.append('username', document.querySelector('#txtusername').value);
+                form_data.append('email', document.querySelector('#txtemail').value);
+                form_data.append('name', document.querySelector('#txtname').value);
+                form_data.append('gender', document.querySelector('#txtgender').value);
+                form_data.append('mobile', document.querySelector('#txtmobile').value);
+                form_data.append('address', document.querySelector('#txtaddress').value);
+                const fileInput = document.querySelector('#fileInput');
+                if (fileInput.files.length > 0) {
+                    form_data.append('image', fileInput.files[0]);
+                }
+
+                $.ajax({
+                    url: "http://localhost:8050/updateprofile",
+                    method: 'PATCH',
+                    data: form_data,
+                    contentType: false,
+                    processData: false,
+
+                    headers: {
+                        'Authorization': sessionStorage.getItem('accesstoken')
+                    },
+                    success: function (response) {
+                        toastersuccess('Profile Updated Successfully!');
+                      
+                        var delay = 1000;
+                        setTimeout(function () { window.location = "userprofile.html"; }, delay);
+                    },
+
+                    error: function (xhr, status, error) {
+                        console.log("Error: " + error);
+                        console.log("Status: " + status);
+                        console.log(xhr);
+                    }
+                });
+            });
+            $("#closeerror").click(function () {
+                $("#errorbox").hide();
+            });
+        })
+    </script>
+</body>
+
+</html>
