@@ -48,7 +48,7 @@ func Routes(app *config.AppConfig) http.Handler {
 	// r.Handle("/profile", endpoints.AuthMiddleware(http.HandlerFunc(endpoints.UpdateProfile(db)))).Methods("PUT")
 
 	c := cors.New(cors.Options{
-		AllowedOrigins: []string{"http://localhost", "http://192.168.0.38:5500"},
+		AllowedOrigins: []string{"http://localhost", "http://192.168.0.39:5500"},
 		AllowedMethods: []string{"GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"},
 		AllowedHeaders: []string{"Content-Type", "Authorization"},
 	})

@@ -37,7 +37,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.css">
     <script src="https://cdn.jsdelivr.net/npm/izitoast@1.4.0/dist/js/iziToast.min.js"></script>
-  
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/izitoast@1.4.0/dist/css/iziToast.min.css">
 
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
@@ -130,7 +130,7 @@
                         <hr>
                         <p class="mb-0 font-weight-bold">Total: <span id="total"></span></p>
                         <button class="btn btn-primary"
-                            style="background: #fb641b; border: rgb(8, 8, 8);">CheckOut</button>
+                            style="background: #ffffff; border: rgb(8, 8, 8);">CheckOut</button>
                     </div>
                 </div>
             </div>
@@ -159,9 +159,6 @@
                         </li>
                     </ul>
                 </div>
-
-
-
                 <div class="col-md-6 pt-5">
                     <h2 class="h2 text-light border-bottom pb-3 border-light">Further Info</h2>
                     <ul class="list-unstyled text-light footer-link-list">
@@ -302,6 +299,7 @@
                                 $('#product-cards').append(card);
                                 subtotal += (val.Product.price * val.quantity);
                             });
+
                             $('#subtotal').text('\u20B9 ' + subtotal.toFixed(2));
 
                             if (subtotal > 500) {
@@ -321,7 +319,7 @@
                                     var quantity = parseInt($(this).find('.quantity-input').val());
                                     var price = parseFloat($(this).find('p[data-total-price]').data('total-price'));
                                     var price2 = parseFloat($(this).find('p[data-original-price]').data('original-price'));
-                                    console.log("aqqqq", price2)
+                                    console.log("ssssssssssssssssssssssssssssss", price2);
                                     subtotal += quantity * price2;
                                 });
                                 $('#subtotal').text('\u20B9 ' + subtotal.toFixed(2));
@@ -381,8 +379,8 @@
                                             product_id: productId
                                         }),
                                         success: function (response) {
-                                            toastererror('Product has been removed from to cart successfully!');
-                                            
+                                            toastererror('Product has been removed from cart successfully!');
+
                                             var delay = 1000;
                                             setTimeout(function () { location.reload() }, delay);
                                         },
@@ -394,7 +392,7 @@
                             });
                         }
                         else {
-                            $('#product-cards').html('<p>No products found in cart</p>').find('p').css({
+                            $('#product-cards').html('<p>No products found i    n cart</p>').find('p').css({
                                 'color': 'black',
                                 'font-size': '36px',
                             });
@@ -431,29 +429,40 @@
                         }
                     });
                 }
-
-
-                const productIdsString = sessionStorage.getItem('product_ids');
+                const productIdsString = sessionStorage.getItem('product_id');
 
                 // parse the string to an array of prodcut IDs
                 const productIdsArray = JSON.parse(productIdsString);
 
+        
+                $('#product-cards .row').each(function () {
+                        var price8 = parseFloat($(this).find('p[data-original-price]').data('original-price'));
+                        console.log("78887787874", price8);
+                });
                 // iterate over the array and make a POSt request for each product ID
-                productIdsArray.forEach((productId) => {
+                productIdsArray.forEach((product) => {
+                    const productId = product.id;
+                    const quantity = product.quantity;
                     const apiUrl = 'http://localhost:8050/cart';
+                 
 
                     $.ajax({
                         url: apiUrl,
                         method: 'POST',
+                        processData: false,
+                        contentType: false,
+
                         headers: {
                             'Authorization': sessionStorage.getItem('accesstoken')
                         },
+
                         data: JSON.stringify({
-                            product_id: productId
+                            product_id: productId,
+                            quantity: quantity
                         }),
                         success: function (data) {
                             toastersuccess("Product Added to Cart Successfully!");
-                            sessionStorage.removeItem('product_ids', data.product_ids)
+                            sessionStorage.removeItem('product_id', data.product_id);
                         },
                     });
                 })
@@ -466,3 +475,4 @@
 </body>
 
 </html>
+

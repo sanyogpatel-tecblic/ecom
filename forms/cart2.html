@@ -254,104 +254,166 @@
                 $('#login-container').append(loginBtn2);
 
                 const backbtn = $('<a class="btn btn-info" href="homepage.html">Back</a>')
+                $('#login-container').append(backbtn);
                 loginBtn2.css("display", "inline-block");
                 backbtn.css("margin-left", "5px");
-                $('#login-container').append(backbtn);
                 const productIdsString = sessionStorage.getItem('product_id');
                 const productIdsArray = JSON.parse(productIdsString);
 
-                productIdsArray.forEach((productId) => {
-                    const apiUrl = 'http://localhost:8050/products/' + productId;
 
-                    console.log(productId)
+
+
+                productIdsArray.forEach((product) => {
+                    const productId = product.id;
+                    const quantity = product.quantity;
+                    const apiUrl = 'http://localhost:8050/products/' + productId;
                     $.ajax({
                         url: apiUrl,
                         method: 'GET',
                         success: function (data) {
-                            const productIndex = productIdsArray.findIndex(productId => productId === data.id);
-
-                            const quantity = productIdsArray[productIndex].quantity;
-
-                            $.each(data, function (index, val) {
-                                // create the card HTML and update the quantity input value
-                                var card = $(
+                            if (data && data.length > 0) {
+                                var subtotal = 0;
+                                var card
+                                $.each(data, function (index, val) {
+                                    // create the card HTML and update the quantity input value
+                                    card = $(
+                                        `
+                                        <div class="col-md-12 mb-4">
+                                        <div class="card rounded-0">
+                                            <div class="row">
+                                            <div class="col-md-3">
+                                                <img class="card-img-top rounded-10 img-fluid w-100" src="${val.imageurl}" style="object-fit: contain">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="card-body">
+                                                <a href="shop-single.html" class="h4 text-decoration-none text-truncate">${val.name}</a>
+                                                <p class="text-left mb-0" data-original-price="${val.price}">&#8377; ${val.price}</p>
+                                                <div class="input-group mb-3">
+                                                    <div class="input-group-prepend">
+                                                    <button class="btn btn-outline-secondary minus-btn" type="button" data-product-id="${val.id}">-</button>
+                                                    </div>
+                                                    <input type="text" class="form-control quantity-input" placeholder="Quantity" aria-label="Quantity" value="${quantity}">
+                                                    <div class="input-group-append">
+                                                    <button class="btn btn-outline-secondary plus-btn" type="button" data-product-id="${val.id}">+</button>
+                                                    </div>
+                                                </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="card-body">
+                                                <p class="text-left mb-0" data-total-price="${val.price * quantity}">&#8377; ${val.price * quantity}</p>
+                                                <button class="btn btn-danger remove-btn" type="button" data-product-id="${val.id}">Remove</button>
+                                                </div>
+                                            </div>
+                                            </div>  
+                                        </div>
+                                        </div>
                                     `
-                                <div class="col-md-12 mb-4">
-                                    <div class="card rounded-0">
-                                    <div class="row">
-                                        <div class="col-md-3">
-                                        <img class="card-img-top rounded-10 img-fluid w-100" src="` + val.imageurl + `" style="object-fit: contain">
-                                        </div>
-                                        <div class="col-md-6">
-                                        <div class="card-body">
-                                            <a href="shop-single.html" class="h4 text-decoration-none text-truncate">` + val.name + `</a>
-                                            <p class="text-left mb-0" data-original-price="`+ val.price + `">&#8377; ` + val.price + `</p>
-                                            <div class="input-group mb-3">
-                                            <div class="input-group-prepend">
-                                                <button class="btn btn-outline-secondary minus-btn" type="button" data-product-id="` + val.id + `">-</button>
-                                            </div>
-                                            <input type="text" class="form-control quantity-input" placeholder="Quantity" aria-label="Quantity" value="` + quantity + `">
-                                            <div class="input-group-append">
-                                                <button class="btn btn-outline-secondary plus-btn" type="button" data-product-id="` + val.id + `">+</button>
-                                            </div>
-                                            </div>
-                                        </div>
-                                        </div>
-                                        <div class="col-md-3">
-                                        <div class="card-body">
-                                            <p class="text-left mb-0" data-total-price="` + val.price * quantity + `">&#8377; ` + val.price * quantity + `</p>
-                                            <button class="btn btn-danger remove-btn" type="button" data-product-id="` + val.id + `">Remove</button>
-                                        </div>
-                                        </div>
-                                    </div>
-                                    </div>
-                                </div>
-                                `
-                                );
-                                $('#product-cards').append(card);
-                            });
-                            $(document).on('click', '.plus-btn', function () {
-                                var productId = $(this).data('product-id');
-                                var quantityInput = $(this).closest('.input-group').find('.quantity-input');
-                                var currentQuantity = parseInt(quantityInput.val());
-                                var totalPrice = $(this).closest('.row').find('p[data-total-price]');
-                                var price2 = parseFloat($(this).find('p[data-original-price]').data('original-price'));
-                                console.log(price2);
-                                var currentTotalPrice = parseFloat(totalPrice.data('total-price'));
-                                if (currentQuantity < 10) {
-                                    if (currentQuantity >= 1) {
-                                        var newQuantity = currentQuantity + 1;
-                                        quantityInput.val(newQuantity);
+                                    );
+                                    $('#product-cards').append(card);
+                                    subtotal += parseFloat(val.price * quantity);
+                                    
+                                });
+                                $('#subtotal').text('\u20B9 ' + subtotal);
+
+                                var deliveryCharge = (subtotal > 500) ? 0 : 50; // set your delivery charge here
+                                $('#delivery-charge').text('\u20B9 ' + deliveryCharge.toFixed(2));
+
+                                $('#total').text('\u20B9 ' + (subtotal + deliveryCharge).toFixed(2));
+
+                                function updateSubtotal() {
+                                    var subtotal = 0;
+                                    $('#product-cards .row').each(function () {
+                                        var quantity = parseInt($(this).find('.quantity-input').val());
+                                        var price = parseFloat($(this).find('p[data-total-price]').data('total-price'));
+                                        var price2 = parseFloat($(this).find('p[data-original-price]').data('original-price'));
+                                        console.log("aqqqq", price2)
+                                        subtotal += quantity * price2;
+                                    });
+                                    $('#subtotal').text('\U2 ' + subtotal.toFixed(2));
+
+                                    var deliveryCharge = (subtotal > 500) ? 0 : 50; // set your delivery charge here
+                                    $('#delivery-charge').text('\u20B9 ' + deliveryCharge.toFixed(2));
+
+                                    $('#total').text('\u20B9 ' + (subtotal + deliveryCharge).toFixed(2));
+                                }
+                                $(document).on('click', '.plus-btn', function () {
+                                    $('#product-cards').append(card);
+                                    var productId = $(this).data('product-id');
+                                    var quantityInput = $(this).closest('.input-group').find('.quantity-input');
+
+                                    var currentQuantity = parseInt(quantityInput.val());
+
+                                    var totalPrice = $(this).closest('.row').find('p[data-total-price]');
+                                    var price2 = parseFloat($(this).find('p[data-original-price]').data('original-price'));
+                                    
+
+                                    var currentTotalPrice = parseFloat(totalPrice.data('total-price'));
+                                    if (currentQuantity < 10) {
+                                        if (currentQuantity >= 1) {
+                                            var newQuantity = currentQuantity + 1;
+
+                                            let productIds = JSON.parse(sessionStorage.getItem('product_id')) || [];
+                                            let index = productIds.findIndex((product) => product.id === productId);
+
+                                            productIds[index].quantity = newQuantity;
+                                            sessionStorage.setItem('product_id', JSON.stringify(productIds));
+
+                                            quantityInput.val(newQuantity);
+                                            var newTotalPrice = (currentTotalPrice / currentQuantity) * newQuantity;
+                                            totalPrice.data('total-price', newTotalPrice.toFixed(2));
+                                            totalPrice.text('\u20B9' + newTotalPrice.toFixed(2));
+                                            updateSubtotal();
+                                        }
+                                    }
+                                    if (currentQuantity >= 10) {
+                                        toastererror("Maximum Quantity Reached!");
+                                    }
+                                });
+
+                                $(document).on('click', '.minus-btn', function () {
+                                    var productId = $(this).data('product-id');
+                                    var quantityInput = $(this).closest('.input-group').find('.quantity-input');
+                                    var currentQuantity = parseInt(quantityInput.val());
+                                    var totalPrice = $(this).closest('.row').find('p[data-total-price]');
+                                    var currentTotalPrice = parseFloat(totalPrice.data('total-price'));
+
+                                    if (currentQuantity > 1) {
+                                        quantityInput.val(currentQuantity - 1); // Update the quantity input value
+                                        var newQuantity = currentQuantity - 1;
+
+                                        let productIds = JSON.parse(sessionStorage.getItem('product_id')) || [];
+                                        let index = productIds.findIndex((product) => product.id === productId);
+
+                                        productIds[index].quantity = newQuantity;
+                                        sessionStorage.setItem('product_id', JSON.stringify(productIds));
                                         var newTotalPrice = (currentTotalPrice / currentQuantity) * newQuantity;
                                         totalPrice.data('total-price', newTotalPrice.toFixed(2));
                                         totalPrice.text('\u20B9' + newTotalPrice.toFixed(2));
-                                        updateCartQuantity(productId, newQuantity, newTotalPrice.toFixed(2));
                                         updateSubtotal();
+                                    } else if (currentQuantity <= 1) {
+                                        // remove product from session storage
+                                        let productIds = JSON.parse(sessionStorage.getItem('product_id')) || [];
+                                        productIds = productIds.filter((product) => product.id !== productId);
+                                        sessionStorage.setItem('product_id', JSON.stringify(productIds));
+
+                                        // show message and reload page
+                                        toastererror('Product has been removed from cart successfully!');
+                                        var delay = 1000;
+                                        setTimeout(function () { location.reload() }, delay);
                                     }
-                                }
-                                if (currentQuantity >= 10) {
-                                    toastererror("Maximum quantity reached!");
-                                }
-                            });
+                                });
+                            }
 
-                            $(document).on('click', '.minus-btn', function () {
-                                var productId = $(this).data('product-id');
-                                var quantityInput = $(this).closest('.input-group').find('.quantity-input');
-                                var currentQuantity = parseInt(quantityInput.val());
-                                var totalPrice = $(this).closest('.row').find('p[data-total-price]');
-                                var currentTotalPrice = parseFloat(totalPrice.data('total-price'));
-
-                                if (currentQuantity > 1) {
-                                    quantityInput.val(currentQuantity - 1);
-                                    var newTotalPrice = (currentTotalPrice / currentQuantity) * (currentQuantity - 1);
-                                    totalPrice.data('total-price', newTotalPrice.toFixed(2));
-                                    totalPrice.text('\u20B9' + newTotalPrice.toFixed(2));
-                                    updateCartQuantity(productId, currentQuantity - 1, newTotalPrice.toFixed(2));
-                                    updateSubtotal();
-                                } else if (currentQuantity <= 1) {
-                                    
-                                }
-                            });
+                            else {
+                                $('#product-cards').html('<p>No products found in cart</p>').find('p').css({
+                                    'color': 'black',
+                                    'font-size': '36px',
+                                });
+                                $('#subtotal').text('\u20B9 0');
+                                $('#delivery-charge').text('\u20B9 0');
+                                $('#total').text('\u20B9 0');
+                            }
                         },
 
                         error: function (jqXHR) {

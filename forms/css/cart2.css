@@ -1,5 +1,5 @@
 .card-body {
-    height: 150px;
+    height: 1200px;
   }
   
   .card {
@@ -26,12 +26,12 @@
   }
   
   .card .card-body {
-    height: 10px;
+    height: 170px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     padding: 1rem;
-  }
+}
   
   body {
     padding-top: 50px;
