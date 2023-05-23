@@ -15,7 +15,7 @@ var session *scs.SessionManager
 
 func main() {
 	fmt.Println("Server is getting started...")
-	fmt.Println("Listening at port 8050 ...")
+	fmt.Println("Listening at port 8080 ...")
 
 	session = scs.New()
 	session.Lifetime = 24 * time.Hour

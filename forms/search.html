@@ -2,13 +2,12 @@
 <html>
 
 <head>
-    <title>TecKart Home</title>
+    <title>TecKart Products</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="apple-touch-icon" href="assets/img/apple-icon.png">
     <link rel="shortcut icon" type="image/x-icon" href="assets/img/images (1).jpeg">
-
     <link rel='stylesheet' type='text/css' media='screen' href='./assets/css/style.css'>
     <!-- bootstrap css -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
@@ -25,9 +24,13 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/notyf/notyf.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
+
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&display=swap" rel="stylesheet">
@@ -35,21 +38,17 @@
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/templatemo.css">
     <link rel="stylesheet" href="assets/css/custom.css">
-    <link rel="stylesheet" href="css/profile.css">
+    <link rel="stylesheet" href="css/productbyid.css">
 
     <!-- Load fonts style after rendering the layout styles -->
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
     <link rel="stylesheet" href="assets/css/fontawesome.min.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 </head>
 
 <body>
+
     <nav class="navbar navbar-expand-lg navbar-light shadow fixed-top">
         <div class="container-fluid d-flex justify-content-between align-items-center">
 
@@ -77,17 +76,21 @@
                             <a class="nav-link" href="shop.html">Shop</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="contact" href="#">Contact</a>
+                            <a class="nav-link" href="contact.html">Contact</a>
                         </li>
                     </ul>
                 </div>
                 <div class="navbar align-self-center d-flex">
-                    <form class="d-flex ml-3 col-md-5" action="search.html" method="GET">
-                        <input class="form-control form-control-sm mr-2" type="search" name="query" placeholder="Search" aria-label="Search">
+                    <form class="d-flex ml-3 col-md-5" action="search.html" method="GET"
+                        onsubmit="return validateSearchForm()">
+                        <input class="form-control form-control-sm mr-2" type="search" name="query" id="searchInput"
+                            placeholder="Search" aria-label="Search">
                         <button class="btn btn-sm btn-primary" type="submit">Search</button>
                     </form>
-
-          
+                    <a class="nav-icon d-none d-lg-inline" href="#" data-bs-toggle="modal"
+                        data-bs-target="#templatemo_search">
+                        <i class="fa fa-fw fa-search text-dark mr-2"></i>
+                    </a>
                     <a class="nav-icon position-relative text-decoration-none" href="cart.html">
                         <i class="fa fa-fw fa-cart-arrow-down text-dark mr-1"></i>
                         <span
@@ -106,43 +109,20 @@
         </div>
     </nav>
     <div class="container my-5">
-		<div class="profile-img">
-			<img id="user-image" src="" alt="Avatar">
-		</div>
-		<div class="profile-container">
-			<div class="profile-info">
-				<div class="form-group">
-					<label>Username:</label>
-					<span id="txtusername"></span>
-				</div>
-				<div class="form-group">
-					<label>Email:</label>
-					<span id="txtemail"></span>
-				</div>
-				<div class="form-group">
-					<label>Name:</label>
-					<span id="txtname"></span>
-				</div>
-				<div class="form-group">
-					<label>Gender:</label>
-					<span id="txtgender"></span>
-				</div>
-				<div class="form-group">
-					<label>Mobile:</label>
-					<span id="txtmobile"></span>
-				</div>
-				<div class="form-group">
-					<label>Address:</label>
-					<span id="txtaddress"></span>
-				</div>
-				<button type="button" class="btn btn-update" id="btnupdate">Update Profile</button>
-			</div>
-		</div>
-	</div>
-    <div class="error-box" id="errorbox">
-        <div class="close" href="#" id="closeerror">&times;</div>
-        <div id="errortxt"></div>
+        <div class="d-felx align-items-center">
+            <div class="row">
+
+                <div class="container-fluid">
+                    <div class="row" id="product-cards">
+                    </div>
+                </div>
+
+            </div>
+        </div>
     </div>
+    <small id="searchErrorMessage" class="invalid-feedback"></small>
+
+
     <footer class="bg-dark" id="tempaltemo_footer">
         <div class="container">
             <div class="row">
@@ -150,22 +130,17 @@
                 <div class="col-md-4 pt-5">
                     <h2 class="h2 text-success border-bottom pb-3 border-light logo">TecKart</h2>
                     <ul class="list-unstyled text-light footer-link-list">
-                        <li>
-                            <i class="fas fa-map-marker-alt fa-fw"></i>
-                            510/511, Shivalik Shilp 2, Judges Bunglow Rd, Vastrapur, Ahmedabad, Gujarat 380015
-                        </li>
+
                         <li>
                             <i class="fa fa-phone fa-fw"></i>
-                            <a class="text-decoration-none" href="tel:010-020-0340">077779 07777</a>
+                            <a class="text-decoration-none" href="tel:010-020-0340">010-020-0340</a>
                         </li>
                         <li>
                             <i class="fa fa-envelope fa-fw"></i>
-                            <a class="text-decoration-none" href="mailto:info@company.com">hr@tecblic.com</a>
+                            <a class="text-decoration-none" href="mailto:info@company.com">info@company.com</a>
                         </li>
                     </ul>
                 </div>
-
-
 
                 <div class="col-md-6 pt-5">
                     <h2 class="h2 text-light border-bottom pb-3 border-light">Further Info</h2>
@@ -184,21 +159,32 @@
                 </div>
                 <div class="col-auto me-auto">
                     <ul class="list-inline text-left footer-icons">
-
                         <li class="list-inline-item border border-light rounded-circle text-center">
-                            <a class="text-light text-decoration-none" target="_blank"
-                                href="https://www.instagram.com/tecblic"><i class="fab fa-instagram fa-lg fa-fw"></i></a>
+                            <a class="text-light text-decoration-none" target="_blank" href="http://facebook.com/"><i
+                                    class="fab fa-facebook-f fa-lg fa-fw"></i></a>
                         </li>
                         <li class="list-inline-item border border-light rounded-circle text-center">
-                            <a class="text-light text-decoration-none" target="_blank" href="https://twitter.com/tecblic"><i
+                            <a class="text-light text-decoration-none" target="_blank"
+                                href="https://www.instagram.com/"><i class="fab fa-instagram fa-lg fa-fw"></i></a>
+                        </li>
+                        <li class="list-inline-item border border-light rounded-circle text-center">
+                            <a class="text-light text-decoration-none" target="_blank" href="https://twitter.com/"><i
                                     class="fab fa-twitter fa-lg fa-fw"></i></a>
                         </li>
                         <li class="list-inline-item border border-light rounded-circle text-center">
                             <a class="text-light text-decoration-none" target="_blank"
-                                href="https://www.linkedin.com/in/tecblic/"><i class="fab fa-linkedin fa-lg fa-fw"></i></a>
+                                href="https://www.linkedin.com/"><i class="fab fa-linkedin fa-lg fa-fw"></i></a>
                         </li>
                     </ul>
-            </div>
+                </div>
+                <div class="col-auto">
+                    <label class="sr-only" for="subscribeEmail">Email address</label>
+                    <div class="input-group mb-2">
+                        <input type="text" class="form-control bg-dark border-light" id="subscribeEmail"
+                            placeholder="Email address">
+                        <div class="input-group-text btn-success text-light">Subscribe</div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -213,42 +199,41 @@
                 </div>
             </div>
         </div>
-    </footer>
-    </div>
-    <link rel="stylesheet" href="css/profile.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-    <script src='./assets/js/main.js'></script>
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf/notyf.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+    <script src="assets/js/jquery-1.11.0.min.js"></script>
+    <script src="assets/js/jquery-migrate-1.2.1.min.js"></script>
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/templatemo.js"></script>
+    <script src="assets/js/custom.js"></script>
+    <script src="js files/toaster.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
-            token = sessionStorage.getItem('accesstoken')
-            if (token == null) {
-                window.location.href = "login.html";
-            }
+            // Retrieve the query parameter from the URL
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+            const query = urlParams.get('query');
+
+            // Construct the API URL with the query parameter
+            const apiUrl = `http://localhost:8050/search?query=${encodeURIComponent(query)}`;
 
             const username = localStorage.getItem('username');
-            $('#btnsearch').click(function () {
-                alert("comming-soon!")
-            });
-            $('#btnupdate').click(function () {
-                window.location.href = "update_profile.html"
-            });
-            $('#contact').click(function () {
-                alert("comming soon!")
-            });
-            $('#bt').click(function () {
-                alert("comming soon!")
-            });
-
-
             if (username) {
-                const logoutBtn = $('<button class="btn btn-primary" id="logout-btn" href="homepage.html">Logout</button>');
-                logoutBtn.on('click', function () {
-
+                const logoutBtn = $('<button class="btn btn-primary" id="logout-btn">Logout</button>');
+                logoutBtn.on('click', function (response) {
                     localStorage.removeItem('username');
+                    sessionStorage.removeItem('accesstoken', response.accesstoken);
                     window.location.href = "homepage.html";
-
                 });
                 $('#login-logout-container').append(logoutBtn);
                 $('#username-display').html(`Hello, ${username}!`);
@@ -257,34 +242,72 @@
                 $('#login-logout-container').append(loginBtn);
             }
 
-        })
-
-        $.ajax({
-            url: "http://localhost:8050/profile",
-            method: 'GET',
-            headers: {
-                'Authorization': sessionStorage.getItem('accesstoken')
-            },
-            success: function (data) {
-                $('#txtimgurl').val(data[0].imageurl ? data[0].imageurl.String : "");
-                $('#txtusername').text(data[0].username);
-                $('#txtemail').text(data[0].email);
-                $('#txtname').text(data[0].name ? data[0].name.String : "");
-                $('#txtgender').text(data[0].gender ? data[0].gender.String : "");
-                $('#txtmobile').text(data[0].mobile ? data[0].mobile.String : "");
-                $('#txtaddress').text(data[0].address ? data[0].address.String : "");
-
-                $('#user-image').attr('src', data[0].imageurl.String);
-            },
-            error: function (xhr, status, error) {
-                console.log(xhr.responseText);
+            // Function to validate search form submission
+            function validateSearchForm() {
+                const searchInput = document.getElementById('searchInput');
+                const errorMessage = document.getElementById('searchErrorMessage');
+                if (searchInput.value.trim() === '') {
+                    searchInput.classList.add('is-invalid'); // Add 'is-invalid' class to input field
+                    errorMessage.textContent = 'Please enter a search query.'; // Display error message
+                    return false; // Prevent form submission
+                }
+                return true; // Allow form submission
             }
-        });
-        $("#closeerror").click(function () {
-            $("#errorbox").hide();
-        });
 
+            // Bind form submission validation
+            $('form').on('submit', validateSearchForm);
+
+            // Make an AJAX request to fetch the data from the API
+            $.ajax({
+                url: apiUrl,
+                method: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    // Process the data returned by the API
+                    $('#product-cards').empty();
+                    if (data && data.length > 0) {
+                        const productsContainer = document.getElementById('product-cards');
+
+                        // Display the products on your page
+                        $.each(data, function (index, val) {
+                            var card = $(`
+                                <div class="col-md-3 mb-4">
+                                    <div class="card h-100 rounded-0">
+                                        <div class="card rounded-0">
+                                            <img class="card-img-top rounded-10 img-fluid w-100" src="${val.imageurl}" style="object-fit: contain">
+                                            <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center"></div>
+                                        </div>
+                                        <div class="card-body">
+                                            <a href="shop-single.html" class="h4 text-decoration-none text-truncate">${val.name}</a>
+                                            <p class="text-left mb-0" data-total-price="${val.price}">&#8377; ${val.price}</p>
+                                            <div class="input-group-append">
+                                                <button class="btn btn-info cart-btn" type="button" data-product-id="${val.id}">Add to Cart</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            `);
+
+                            // Append the card to the products container
+                            $('#product-cards').append(card);
+                        });
+                    } else {
+                        $('#product-cards').html('<p>No Result Found Try Searching Again</p>').find('p').css({
+                            'color': 'black',
+                            'font-size': '36px',
+                        });
+                    }
+
+                },
+                error: function (error) {
+                    // Handle any errors that occur during the API request
+                    console.error('Error:', error);
+                }
+            });
+        });
     </script>
+
+
 </body>
 
 </html>

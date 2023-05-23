@@ -38,8 +38,11 @@ func Routes(app *config.AppConfig) http.Handler {
 
 	r.Handle("/getusers", endpoints.AuthMiddleware(http.HandlerFunc(endpoints.GetAllUsers(db)))).Methods("GET")
 	r.Handle("/cart", endpoints.AddToCart(db)).Methods("POST")
+	r.Handle("/cart2", endpoints.AddToCart2(db)).Methods("POST")
 	r.Handle("/cart", endpoints.DeleteCart(db)).Methods("DELETE")
 	r.Handle("/products/{id}", endpoints.ViewCartNotLoggedIn(db)).Methods("GET")
+
+	r.Handle("/search", endpoints.SearchProducts(db)).Methods("GET")
 
 	r.Handle("/getcart", endpoints.AuthMiddleware(http.HandlerFunc(endpoints.CartItems(db)))).Methods("GET")
 	// r.Handle("/cart", endpoints.AuthMiddleware(http.HandlerFunc(endpoints.GetCartHandler(db)))).Methods("GET")

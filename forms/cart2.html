@@ -85,18 +85,10 @@
                     </ul>
                 </div>
                 <div class="navbar align-self-center d-flex">
-                    <div class="d-lg-none flex-sm-fill mt-3 mb-4 col-7 col-sm-auto pr-3">
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="inputMobileSearch" placeholder="Search ...">
-                            <div class="input-group-text">
-                                <i class="fa fa-fw fa-search"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <a class="nav-icon d-none d-lg-inline" href="#" data-bs-toggle="modal" id="btnsearch"
-                        data-bs-target="#templatemo_search">
-                        <i class="fa fa-fw fa-search text-dark mr-2"></i>
-                    </a>
+                    <form class="d-flex ml-3 col-md-5" action="search.html" method="GET">
+                        <input class="form-control form-control-sm mr-2" type="search" name="query" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-sm btn-primary" type="submit">Search</button>
+                    </form>
                     <a class="nav-icon position-relative text-decoration-none" href="cart.html">
                         <i class="fa fa-fw fa-cart-arrow-down text-dark mr-1"></i>
                         <span
@@ -261,8 +253,6 @@
                 const productIdsArray = JSON.parse(productIdsString);
 
 
-
-
                 productIdsArray.forEach((product) => {
                     const productId = product.id;
                     const quantity = product.quantity;
@@ -272,6 +262,7 @@
                         method: 'GET',
                         success: function (data) {
                             if (data && data.length > 0) {
+
                                 var subtotal = 0;
                                 var card
                                 $.each(data, function (index, val) {
@@ -301,9 +292,9 @@
                                             </div>
                                             <div class="col-md-3">
                                                 <div class="card-body">
-                                                <p class="text-left mb-0" data-total-price="${val.price * quantity}">&#8377; ${val.price * quantity}</p>
-                                                <button class="btn btn-danger remove-btn" type="button" data-product-id="${val.id}">Remove</button>
-                                                </div>
+                                                    <p class="text-left mb-0" data-total-price="${val.price * quantity}">&#8377; ${val.price * quantity}</p>
+                                                    <button class="btn btn-danger remove-btn" type="button" data-product-id="${val.id}">Remove</button>
+                                                    </div>
                                             </div>
                                             </div>  
                                         </div>
@@ -312,7 +303,11 @@
                                     );
                                     $('#product-cards').append(card);
                                     subtotal += parseFloat(val.price * quantity);
-                                    
+
+                                    const totalPrice = val.price * quantity;
+
+
+
                                 });
                                 $('#subtotal').text('\u20B9 ' + subtotal);
 
@@ -321,8 +316,13 @@
 
                                 $('#total').text('\u20B9 ' + (subtotal + deliveryCharge).toFixed(2));
 
+                                var subtotal = 0;
+                                var price2 = 0;
+                                var newQuantity=0;
+
+                                
                                 function updateSubtotal() {
-                                    var subtotal = 0;
+                                    
                                     $('#product-cards .row').each(function () {
                                         var quantity = parseInt($(this).find('.quantity-input').val());
                                         var price = parseFloat($(this).find('p[data-total-price]').data('total-price'));
@@ -330,7 +330,7 @@
                                         console.log("aqqqq", price2)
                                         subtotal += quantity * price2;
                                     });
-                                    $('#subtotal').text('\U2 ' + subtotal.toFixed(2));
+                                    $('#subtotal').text('\u20B9 ' + subtotal.toFixed(2));
 
                                     var deliveryCharge = (subtotal > 500) ? 0 : 50; // set your delivery charge here
                                     $('#delivery-charge').text('\u20B9 ' + deliveryCharge.toFixed(2));
@@ -339,24 +339,34 @@
                                 }
                                 $(document).on('click', '.plus-btn', function () {
                                     $('#product-cards').append(card);
+
                                     var productId = $(this).data('product-id');
                                     var quantityInput = $(this).closest('.input-group').find('.quantity-input');
 
                                     var currentQuantity = parseInt(quantityInput.val());
 
                                     var totalPrice = $(this).closest('.row').find('p[data-total-price]');
-                                    var price2 = parseFloat($(this).find('p[data-original-price]').data('original-price'));
-                                    
 
                                     var currentTotalPrice = parseFloat(totalPrice.data('total-price'));
                                     if (currentQuantity < 10) {
                                         if (currentQuantity >= 1) {
-                                            var newQuantity = currentQuantity + 1;
+                                           
+                                            newQuantity = currentQuantity + 1;
 
                                             let productIds = JSON.parse(sessionStorage.getItem('product_id')) || [];
                                             let index = productIds.findIndex((product) => product.id === productId);
 
+                                            $('#product-cards .row').each(function () {
+                                                 price2 = parseFloat($(this).find('p[data-original-price]').data('original-price'));
+
+                                            });
+                                            console.log("aqqqq2222222", price2);
+                                            new_session_total_price = newQuantity * price2;
+
                                             productIds[index].quantity = newQuantity;
+                                            productIds[index].final_price = new_session_total_price;
+
+
                                             sessionStorage.setItem('product_id', JSON.stringify(productIds));
 
                                             quantityInput.val(newQuantity);
@@ -370,6 +380,7 @@
                                         toastererror("Maximum Quantity Reached!");
                                     }
                                 });
+                                console.log("nnnnnnnnnaaaaaaaaaaa",newQuantity)
 
                                 $(document).on('click', '.minus-btn', function () {
                                     var productId = $(this).data('product-id');

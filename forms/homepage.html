@@ -42,69 +42,64 @@
         href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
     <link rel="stylesheet" href="assets/css/fontawesome.min.css">
 </head>
-<body>      
+
+<body>
     <nav class="navbar navbar-expand-lg navbar-light shadow fixed-top">
         <div class="container-fluid d-flex justify-content-between align-items-center">
-
-            <a class="navbar-brand text-success logo h1 align-self-center" href="homepage.html">
-                TecKart
-            </a>
-
-            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
-                data-bs-target="#templatemo_main_nav" aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="align-self-center collapse navbar-collapse flex-fill  d-lg-flex justify-content-lg-between"
-                id="templatemo_main_nav">
-                <div class="flex-fill">
-                    <ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="homepage.html">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="about.html">About</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="shop.html">Shop</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="contact" href="#">Contact</a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="navbar align-self-center d-flex">
-                    <div class="d-lg-none flex-sm-fill mt-3 mb-4 col-7 col-sm-auto pr-3">
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="inputMobileSearch" placeholder="Search ...">
-                            <div class="input-group-text">
-                                <i class="fa fa-fw fa-search"></i>
-                            </div>
-                        </div>
-                    </div>
-
-                    <a class="nav-icon d-none d-lg-inline" id="btnsearch" data-bs-toggle="modal"
-                        data-bs-target="#templatemo_search">
-                        <i class="fa fa-fw fa-search text-dark mr-2"></i>
-                    </a>
-                    <a class="nav-icon position-relative text-decoration-none" href="cart.html">
-                        <i class="fa fa-fw fa-cart-arrow-down text-dark mr-1"></i>
-                        <span
-                            class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark"></span>
-                    </a>
-
-                    <a class="nav-icon position-relative text-decoration-none" href="userprofile.html">
-
-                        <div id="username-display"></div>
-                    </a>
-                    <a class="nav-icon position-relative text-decoration-none">
-                        <div id="login-logout-container"></div>
-                    </a>
-                </div>
+      
+          <a class="navbar-brand text-success logo h1 align-self-center" href="homepage.html">
+            TecKart
+          </a>
+      
+          <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
+            data-bs-target="#templatemo_main_nav" aria-controls="navbarSupportedContent" aria-expanded="false"
+            aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+      
+          <div class="align-self-center collapse navbar-collapse flex-fill  d-lg-flex justify-content-lg-between"
+            id="templatemo_main_nav">
+            <div class="flex-fill">
+              <ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="homepage.html">Home</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="about.html">About</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="shop.html">Shop</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" id="contact" href="#">Contact</a>
+                </li>
+              </ul>
             </div>
+            <div class="navbar align-self-center d-flex">
+              <form class="d-flex ml-3 col-md-5" action="search.html" method="GET" id="searchForm">
+                <input class="form-control form-control-sm mr-2" type="search" name="query" id="searchInput" placeholder="Search"
+                  aria-label="Search">
+                <button class="btn btn-sm btn-primary" type="submit">Search</button>
+              </form>
+      
+      
+              <a class="nav-icon position-relative text-decoration-none" href="cart.html">
+                <i class="fa fa-fw fa-cart-arrow-down text-dark mr-1"></i>
+                <span
+                  class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark"></span>
+              </a>
+      
+              <a class="nav-icon position-relative text-decoration-none" href="userprofile.html">
+      
+                <div id="username-display"></div>
+              </a>
+              <a class="nav-icon position-relative text-decoration-none">
+                <div id="login-logout-container"></div>
+              </a>
+            </div>
+          </div>
         </div>
-    </nav>
+      </nav>      
 
     <section class="banner-section d-flex justify-content-center
             align-items-center" style="background-image:
@@ -163,18 +158,20 @@
 
                         <li class="list-inline-item border border-light rounded-circle text-center">
                             <a class="text-light text-decoration-none" target="_blank"
-                                href="https://www.instagram.com/tecblic"><i class="fab fa-instagram fa-lg fa-fw"></i></a>
-                        </li>
-                        <li class="list-inline-item border border-light rounded-circle text-center">
-                            <a class="text-light text-decoration-none" target="_blank" href="https://twitter.com/tecblic"><i
-                                    class="fab fa-twitter fa-lg fa-fw"></i></a>
+                                href="https://www.instagram.com/tecblic"><i
+                                    class="fab fa-instagram fa-lg fa-fw"></i></a>
                         </li>
                         <li class="list-inline-item border border-light rounded-circle text-center">
                             <a class="text-light text-decoration-none" target="_blank"
-                                href="https://www.linkedin.com/in/tecblic/"><i class="fab fa-linkedin fa-lg fa-fw"></i></a>
+                                href="https://twitter.com/tecblic"><i class="fab fa-twitter fa-lg fa-fw"></i></a>
+                        </li>
+                        <li class="list-inline-item border border-light rounded-circle text-center">
+                            <a class="text-light text-decoration-none" target="_blank"
+                                href="https://www.linkedin.com/in/tecblic/"><i
+                                    class="fab fa-linkedin fa-lg fa-fw"></i></a>
                         </li>
                     </ul>
-            </div>
+                </div>
             </div>
         </div>
 
@@ -190,62 +187,64 @@
             </div>
         </div>
     </footer>
- 
+
     <link rel="stylesheet" href="css/home.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-<script src='./assets/js/main.js'></script>
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('#btnsearch').click(function(){
-            alert("comming soon!")
-        });
-        
-        $('#contact').click(function(){
-            alert("comming soon!")
-
-        });
-        
-        const username = localStorage.getItem('username');
-
-        if (username) {
-            const logoutBtn = $('<button class="btn btn-primary" id="logout-btn">Logout</button>');
-            logoutBtn.on('click', function (response) {
-                localStorage.removeItem('username');
-                sessionStorage.removeItem('accesstoken', response.accesstoken);
-                window.location.href = "homepage.html";
+    <script src='./assets/js/main.js'></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#btnsearch').click(function () {
+                alert("comming soon!")
             });
 
-            $('#login-logout-container').append(logoutBtn);
-            $('#username-display').html(`Hello, ${username}!`);
-            
-        } else {
-            const loginBtn = $('<a class="btn btn-primary" href="login.html">Login</a>');
-            $('#login-logout-container').append(loginBtn);
-        }
+            $('#contact').click(function () {
+                alert("comming soon!")
 
-        $.ajax({
-            url: "http://localhost:8050/category",
-            method: 'GET',
-            success: function (data) {
-                $('#wellhidden').removeClass('hidden');
-                $('#data-container').empty();
-                $('#btnshowdata').hide('fade');
-                $('#wellhidden2').removeClass('hidden');
-                $.each(data, function (index, val) {
-                    var card = $('<div class="col-md-2 mb-2"><div class="card">' +
-                        '<a href="product_byid.html?id=' + val.id + '"><img class="card-img-top" src="' + val.imageurl + '"alt="Card image cap"  style="height: 100px; object-fit: contain;"></a>' +
-                        '<div class="card-body">' +
-                        '<h5 class="card-title' + (val.category.split(' ').length === 1 ? ' single-word' : '') + '">' + val.category + '</h5>' +
+            });
 
-                        '</div></div></div>'
-                    );
-                    $('#data-container').append(card);
+            const username = localStorage.getItem('username');
+
+            if (username) {
+                const logoutBtn = $('<button class="btn btn-primary" id="logout-btn">Logout</button>');
+                logoutBtn.on('click', function (response) {
+                    localStorage.removeItem('username');
+                    sessionStorage.removeItem('accesstoken', response.accesstoken);
+                    window.location.href = "homepage.html";
                 });
-            },
+
+                $('#login-logout-container').append(logoutBtn);
+                $('#username-display').html(`Hello, ${username}!`);
+
+            } else {
+                const loginBtn = $('<a class="btn btn-primary" href="login.html">Login</a>');
+                $('#login-logout-container').append(loginBtn);
+            }
+
+            $.ajax({
+                url: "http://localhost:8050/category",
+                method: 'GET',
+                success: function (data) {
+                    $('#wellhidden').removeClass('hidden');
+                    $('#data-container').empty();
+                    $('#btnshowdata').hide('fade');
+                    $('#wellhidden2').removeClass('hidden');
+                    $.each(data, function (index, val) {
+                        var card = $('<div class="col-md-2 mb-2"><div class="card">' +
+                            '<a href="product_byid.html?id=' + val.id + '"><img class="card-img-top" src="' + val.imageurl + '"alt="Card image cap"  style="height: 100px; object-fit: contain;"></a>' +
+                            '<div class="card-body">' +
+                            '<h5 class="card-title' + (val.category.split(' ').length === 1 ? ' single-word' : '') + '">' + val.category + '</h5>' +
+
+                            '</div></div></div>'
+                        );
+                        $('#data-container').append(card);
+                    });
+                },
+            });
+    
         });
-    });
-</script>
-   </body>
+    </script>
+</body>
+
 </html>

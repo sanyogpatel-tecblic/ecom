@@ -1,9 +1,9 @@
 .card-body {
-  height: 150px;
+  height: 550px;
 }
 
 .card {
-  height: 100%;
+  height: 200%;
   transition: all .2s ease-in-out;
 }
 
@@ -14,7 +14,7 @@
 
 .card .card-img-top {
   object-fit: cover;
-  height: 160px;
+  height: 115px;
 }
 
 .order-summary-card {
@@ -26,7 +26,7 @@
 }
 
 .card .card-body {
-  height: 10px;
+  height: 160px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;

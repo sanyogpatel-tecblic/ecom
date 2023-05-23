@@ -46,15 +46,69 @@ func AddToCart(db *sql.DB) http.HandlerFunc {
 		err = db.QueryRow("SELECT quantity FROM cart WHERE user_id = $1 AND product_id = $2", id, cart.ProductID).Scan(&quantity)
 
 		if err == nil {
-			// If the product already exists, update the quantity
-			_, err = db.Exec("UPDATE cart SET quantity = $1 WHERE user_id = $2 AND product_id = $3", quantity+1, id, cart.ProductID)
+			// If the product already exists, update the quantity and final price
+			_, err = db.Exec("UPDATE cart SET quantity = $1, final_price = $2 WHERE user_id = $3 AND product_id = $4", quantity+1, (quantity+1)*cart.Final_price, id, cart.ProductID)
 			if err != nil {
 				http.Error(w, "Failed to update cart", http.StatusInternalServerError)
 				return
 			}
 		} else {
+			_, err = db.Exec("INSERT INTO cart (user_id, product_id, quantity, final_price) VALUES ($1, $2, $3, $4)", id, cart.ProductID, 1, cart.Final_price)
+			if err != nil {
+				http.Error(w, "Failed to add to cart", http.StatusInternalServerError)
+				return
+			}
+		}
+		// Return success response
+		w.WriteHeader(http.StatusCreated)
+		json.NewEncoder(w).Encode(map[string]string{
+			"message": "Product added to cart successfully",
+		})
+	}
+}
 
-			_, err = db.Exec("INSERT INTO cart (user_id, product_id, quantity,final_price) VALUES ($1, $2, $3,$4)", id, cart.ProductID, 1, cart.Final_price)
+func AddToCart2(db *sql.DB) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("content-type", "application/json")
+
+		accessToken := r.Header.Get("Authorization")
+
+		if accessToken == "" {
+			http.Error(w, "Missing access token", http.StatusUnauthorized)
+			return
+		}
+		_, err := VerifyAccessToken(accessToken)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusUnauthorized)
+			return
+		}
+		id, err := GetUserIDFromAccessToken(accessToken)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusUnauthorized)
+			return
+		}
+
+		var cart models.Cart
+
+		err = json.NewDecoder(r.Body).Decode(&cart)
+		if err != nil {
+			http.Error(w, "Invalid request body", http.StatusBadRequest)
+			return
+		}
+
+		// Check if product already exists in cart
+		var quantity int
+		err = db.QueryRow("SELECT quantity FROM cart WHERE user_id = $1 AND product_id = $2", id, cart.ProductID).Scan(&quantity)
+		log.Println(quantity)
+		if err == nil {
+			// If the product already exists, update the quantity and final price
+			_, err = db.Exec("UPDATE cart SET quantity = $1, final_price = $2 WHERE user_id = $3 AND product_id = $4", quantity+1, cart.Final_price, id, cart.ProductID)
+			if err != nil {
+				http.Error(w, "Failed to update cart", http.StatusInternalServerError)
+				return
+			}
+		} else {
+			_, err = db.Exec("INSERT INTO cart (user_id, product_id, quantity, final_price) VALUES ($1, $2, $3, $4)", id, cart.ProductID, cart.Quantity, cart.Final_price)
 			if err != nil {
 				http.Error(w, "Failed to add to cart", http.StatusInternalServerError)
 				return

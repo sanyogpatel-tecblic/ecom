@@ -2,16 +2,16 @@ package models
 
 import "database/sql"
 
+type APIError struct {
+	Code    int    `json:"code"`
+	Message string `json:"message"`
+}
+
 type Category struct {
 	ID         int    `json:"id" validate:"required"`
 	Category   string `json:"category" validate:"required"`
 	Statuscode int    `json:"status"`
 	ImageURL   string `json:"imageurl"`
-}
-
-type APIError struct {
-	Code    int    `json:"code"`
-	Message string `json:"message"`
 }
 
 type Product struct {

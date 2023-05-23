@@ -81,14 +81,11 @@
                     </ul>
                 </div>
                 <div class="navbar align-self-center d-flex">
-                    <div class="d-lg-none flex-sm-fill mt-3 mb-4 col-7 col-sm-auto pr-3">
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="inputMobileSearch" placeholder="Search ...">
-                            <div class="input-group-text">
-                                <i class="fa fa-fw fa-search"></i>
-                            </div>
-                        </div>
-                    </div>
+                    <form class="d-flex ml-3 col-md-5" action="search.html" method="GET">
+                        <input class="form-control form-control-sm mr-2" type="search" name="query" placeholder="Search"
+                            aria-label="Search">
+                        <button class="btn btn-sm btn-primary" type="submit">Search</button>
+                    </form>
                     <a class="nav-icon d-none d-lg-inline" href="#" data-bs-toggle="modal"
                         data-bs-target="#templatemo_search">
                         <i class="fa fa-fw fa-search text-dark mr-2"></i>
@@ -240,7 +237,6 @@
             } else {
                 const loginBtn = $('<a class="btn btn-primary" href="login.html">Login</a>');
                 $('#login-logout-container').append(loginBtn);
-
             }
 
             $.ajax({
@@ -289,9 +285,10 @@
 
                 const productId = $(this).data('product-id');
                 console.log(productId)
+         
 
                 var price = $(this).closest('.card-body').find('.text-left').text().trim().replace('₹', ''); // get the price from the HTML
-                console.log(price)
+                console.log("456465464",price)
                 price = parseInt(price);
                 console.log(typeof (price))
 
@@ -302,13 +299,16 @@
                         // If product ID is not present, add the product ID and quantity to the array
                         productIds.push({
                             id: productId,
-                            quantity: 1
+                            quantity: 1,
+                            final_price:price
                         });
                         sessionStorage.setItem('product_id', JSON.stringify(productIds));
                         toastersuccess("Product added to cart successfully!");
                     } else {
                         // If product ID is already present, update the quantity
                         productIds[index].quantity += 1;
+
+                        productIds[index].final_price == 0;
                         sessionStorage.setItem('product_id', JSON.stringify(productIds));
                         toastersuccess("Quantity updated successfully!");
                     }
