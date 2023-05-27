@@ -11,68 +11,52 @@ import (
 	"path/filepath"
 
 	"git.tecblic.com/sanyog-tecblic/ecom/controller/models"
+	"gorm.io/gorm"
 )
 
-func GetUserProfile(db *sql.DB) func(w http.ResponseWriter, r *http.Request) {
+func GetUserProfile(db *gorm.DB) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
-
 		accessToken := r.Header.Get("Authorization")
 
 		if accessToken == "" {
-			http.Error(w, "missing access token", http.StatusUnauthorized)
+			http.Error(w, "Missing access token", http.StatusUnauthorized)
+			return
 		}
+
 		_, err := VerifyAccessToken(accessToken)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusUnauthorized)
 			return
 		}
+
 		id, err := GetUserIDFromAccessToken(accessToken)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusUnauthorized)
 			return
 		}
 
-		var users []models.User
-
-		rows, err := db.Query(`select id,username,password,email,
-								name,gender,mobile,image_url,address from users
-								where id=$1`, id)
+		var user []models.User
+		err = db.Where("id = ?", id).Find(&user).Error
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 			return
 		}
-		for rows.Next() {
-			var user models.User
-			err := rows.Scan(
-				&user.ID,
-				&user.Username,
-				&user.Password,
-				&user.Email,
-				&user.Name,
-				&user.Gender,
-				&user.Mobile,
-				&user.ImageURL,
-				&user.Address)
-			if err != nil {
-				http.Error(w, err.Error(), http.StatusBadRequest)
-				return
-			}
-			users = append(users, user)
-		}
-		json.NewEncoder(w).Encode(users)
+		json.NewEncoder(w).Encode(user)
 	}
 }
 
 // personal infor add endpoint
-func UpdateProfile(db *sql.DB) func(w http.ResponseWriter, r *http.Request) {
+
+func UpdateProfile(db *gorm.DB) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("content-type", "multipart/form-data")
+		w.Header().Set("Content-Type", "multipart/form-data")
 
 		accessToken := r.Header.Get("Authorization")
 		if accessToken == "" {
-			http.Error(w, "missing access token", http.StatusUnauthorized)
+			http.Error(w, "Missing access token", http.StatusUnauthorized)
 			return
 		}
+
 		_, err := VerifyAccessToken(accessToken)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusUnauthorized)
@@ -90,14 +74,15 @@ func UpdateProfile(db *sql.DB) func(w http.ResponseWriter, r *http.Request) {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
+
 		username := r.FormValue("username")
 		email := r.FormValue("email")
-		name := r.FormValue("name")
-		gender := r.FormValue("gender")
-		mobile := r.FormValue("mobile")
-		address := r.FormValue("address")
+		name := sql.NullString{String: r.FormValue("name"), Valid: true}
+		gender := sql.NullString{String: r.FormValue("gender"), Valid: true}
+		mobile := sql.NullString{String: r.FormValue("mobile"), Valid: true}
+		address := sql.NullString{String: r.FormValue("address"), Valid: true}
 
-		var imageURL string
+		var imageURL sql.NullString
 
 		file, handler, err := r.FormFile("image")
 		if err == nil {
@@ -124,8 +109,9 @@ func UpdateProfile(db *sql.DB) func(w http.ResponseWriter, r *http.Request) {
 
 			io.Copy(tempFile, file)
 
-			imageURL = fmt.Sprintf("../uploads/%s", handler.Filename)
-			err = os.Rename(tempFile.Name(), imageURL)
+			imageURL.String = fmt.Sprintf("../uploads/%s", handler.Filename)
+			imageURL.Valid = true
+			err = os.Rename(tempFile.Name(), imageURL.String)
 			if err != nil {
 				http.Error(w, fmt.Sprintf("Error moving file to uploads directory: %v", err), http.StatusInternalServerError)
 				return
@@ -133,21 +119,26 @@ func UpdateProfile(db *sql.DB) func(w http.ResponseWriter, r *http.Request) {
 
 		} else if err == http.ErrMissingFile {
 			// no image uploaded, keep the existing image URL
-			imageURL = r.FormValue("imageurl")
+			imageURL.String = r.FormValue("imageurl")
+			imageURL.Valid = true
 		} else {
 			http.Error(w, fmt.Sprintf("Error uploading image: %v", err), http.StatusInternalServerError)
 			return
 		}
 
-		_, err = db.Exec(`UPDATE users SET username = $1, email =$2, name = $3, gender = $4, mobile =$5, address = $6,
-			image_url = CASE 
-				WHEN $7 <> '' THEN $7 -- new image URL provided
-				ELSE image_url -- no image URL provided, keep existing value
-			END
-			WHERE id = $8;`, username, email, name, gender, mobile, address, imageURL, id)
+		user := models.User{
+			Username: username,
+			Email:    email,
+			Name:     name,
+			Gender:   gender,
+			Mobile:   mobile,
+			Address:  address,
+			ImageURL: imageURL,
+		}
 
+		err = db.Model(&models.User{}).Where("id = ?", id).Updates(user).Error
 		if err != nil {
-			http.Error(w, fmt.Sprintf("Error preparing SQL statement: %v", err), http.StatusInternalServerError)
+			http.Error(w, fmt.Sprintf("Error updating user profile: %v", err), http.StatusInternalServerError)
 			return
 		}
 

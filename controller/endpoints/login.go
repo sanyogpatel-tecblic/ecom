@@ -1,16 +1,16 @@
 package endpoints
 
 import (
-	"context"
 	"database/sql"
 	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
-	"time"
+	"strconv"
 
 	"git.tecblic.com/sanyog-tecblic/ecom/controller/models"
 	"github.com/dgrijalva/jwt-go"
+	"gorm.io/gorm"
 )
 
 func generateAccessToken(userID string) (string, error) {
@@ -83,9 +83,10 @@ func VerifyAccessToken(accessToken string) (jwt.MapClaims, error) {
 	return claims, nil
 }
 
-func LoginHandler(db *sql.DB) http.HandlerFunc {
+func LoginHandler(db *gorm.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
+
 		// Parse the request body
 		var reqBody struct {
 			Username string `json:"username"`
@@ -98,23 +99,18 @@ func LoginHandler(db *sql.DB) http.HandlerFunc {
 		}
 
 		// Query the database for the user
-		var userID string
-		err = db.QueryRow("SELECT id FROM users WHERE username=$1 AND password=$2", reqBody.Username, reqBody.Password).Scan(&userID)
-		if err == sql.ErrNoRows {
+		var user models.User
+		result := db.Table("users").Where("username = ? AND password = ?", reqBody.Username, reqBody.Password).First(&user)
+		if result.Error == gorm.ErrRecordNotFound {
 			http.Error(w, "Invalid username or password", http.StatusUnauthorized)
 			return
-		} else if err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
+		} else if result.Error != nil {
+			http.Error(w, result.Error.Error(), http.StatusInternalServerError)
 			return
 		}
 
 		// Generate an access token for the user
-		accessToken, err := generateAccessToken(userID)
-		if err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
-			return
-		}
-		_, err = GetUserIDFromAccessToken(accessToken)
+		accessToken, err := generateAccessToken(strconv.Itoa(int(user.ID)))
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
@@ -171,10 +167,8 @@ func GetAllUsers(db *sql.DB) http.HandlerFunc {
 	}
 }
 
-func Register(db *sql.DB) http.HandlerFunc {
+func Register(db *gorm.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
-		defer cancel()
 		w.Header().Set("Content-Type", "application/json")
 
 		var user models.User
@@ -206,19 +200,19 @@ func Register(db *sql.DB) http.HandlerFunc {
 			json.NewEncoder(w).Encode(apierror)
 			return
 		}
-		err = db.QueryRowContext(ctx, "INSERT INTO users (username,password,email) VALUES ($1,$2,$3) returning id", user.Username, user.Password, user.Email).Scan(&newID)
-		if err != nil {
-			fmt.Fprintf(w, "Error: %s", err)
-		}
-		if err == nil {
-			user = models.User{
-				ID:       newID,
-				Username: user.Username,
-				Password: user.Password,
-				Email:    user.Email,
-				// Statuscode: http.StatusOK,
+
+		result := db.Table("users").Create(&user)
+		if result.Error != nil {
+			apierror := models.APIError{
+				Code:    http.StatusInternalServerError,
+				Message: "Failed to create user: " + result.Error.Error(),
 			}
+			w.WriteHeader(apierror.Code)
+			json.NewEncoder(w).Encode(apierror)
+			return
 		}
+
+		// Return success response
 		w.WriteHeader(http.StatusAccepted)
 		json.NewEncoder(w).Encode(user)
 	}

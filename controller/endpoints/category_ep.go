@@ -15,6 +15,7 @@ import (
 	"github.com/go-chi/chi"
 	"github.com/gorilla/mux"
 	_ "github.com/lib/pq"
+	"gorm.io/gorm"
 )
 
 var newID int
@@ -112,28 +113,19 @@ func CreateItemHandler(db *sql.DB) func(w http.ResponseWriter, r *http.Request) 
 	}
 }
 
-func GetAllCategpries(db *sql.DB) http.HandlerFunc {
+func GetAllCategories(db *gorm.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
+
 		var categories []models.Category
-		// var row_var error
 
-		rows, err := db.Query("SELECT id,category,imageurl FROM category")
-
-		if err != nil {
-			http.Error(w, "Error parsing request body", http.StatusBadRequest)
+		result := db.Table("category").Find(&categories)
+		if result.Error != nil {
+			errorMsg := map[string]string{"error": result.Error.Error()}
+			json.NewEncoder(w).Encode(errorMsg)
 			return
 		}
-		defer rows.Close()
 
-		for rows.Next() {
-			var category models.Category
-			row_var := rows.Scan(&category.ID, &category.Category, &category.ImageURL)
-			if row_var != nil {
-				log.Fatal(row_var)
-			}
-			categories = append(categories, category)
-		}
 		json.NewEncoder(w).Encode(categories)
 	}
 }

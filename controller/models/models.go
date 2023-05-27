@@ -11,7 +11,15 @@ type Category struct {
 	ID         int    `json:"id" validate:"required"`
 	Category   string `json:"category" validate:"required"`
 	Statuscode int    `json:"status"`
-	ImageURL   string `json:"imageurl"`
+	ImageURL   string `gorm:"column:imageurl" json:"imageurl"`
+}
+type Cart struct {
+	ID          int `json:"id" validate:"required"`
+	UserID      int `json:"user_id"`
+	ProductID   int `json:"product_id"`
+	Quantity    int `json:"quantity"`
+	Final_price int `json:"final_price"`
+	Product     Product
 }
 
 type Product struct {
@@ -26,6 +34,7 @@ type Product struct {
 	Specifications string   `json:"specifications" validate:"required"`
 	Category       Category `json:"category" validate:"required"`
 }
+
 type User struct {
 	ID       int            `json:"id" validate:"required"`
 	Username string         `json:"username" validate:"required"`
@@ -37,12 +46,4 @@ type User struct {
 	// Orders   string `json:"orders" validate:"required"`
 	ImageURL sql.NullString `json:"imageurl" validate:"required"`
 	Address  sql.NullString `json:"address" validate:"required"`
-}
-type Cart struct {
-	ID          int `json:"id" validate:"required"`
-	UserID      int `json:"user_id"`
-	ProductID   int `json:"product_id"`
-	Quantity    int `json:"quantity"`
-	Final_price int `json:"final_price"`
-	Product     Product
 }

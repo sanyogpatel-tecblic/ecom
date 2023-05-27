@@ -1,7 +1,6 @@
 package endpoints
 
 import (
-	"database/sql"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -14,16 +13,13 @@ import (
 
 	"git.tecblic.com/sanyog-tecblic/ecom/controller/models"
 	"github.com/gorilla/mux"
+	"gorm.io/gorm"
 )
 
-func CreateProduct(db *sql.DB) func(w http.ResponseWriter, r *http.Request) {
+func CreateProduct(db *gorm.DB) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
-
-		// err := os.Mkdir("uploads", 0755)
-		// if err != nil {
-		// 	log.Fatal(err)
-		// }
 		w.Header().Set("Content-Type", "application/json")
+
 		err := r.ParseMultipartForm(32 << 20) // max memory 32MB
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -31,7 +27,7 @@ func CreateProduct(db *sql.DB) func(w http.ResponseWriter, r *http.Request) {
 		}
 
 		name := r.FormValue("name")
-		category_id := r.FormValue("category_id")
+		categoryID, err := strconv.Atoi(r.FormValue("category_id"))
 		image, handler, err := r.FormFile("image")
 		if err != nil {
 			w.WriteHeader(http.StatusBadRequest)
@@ -87,108 +83,64 @@ func CreateProduct(db *sql.DB) func(w http.ResponseWriter, r *http.Request) {
 
 		imageURL = filepath
 
-		//the newPath variable is created to hold the file path of the uploaded file
-		// in the "uploads" directory. filepath.Join is used to join the "uploads" directory and
-		// the file name to create the complete file path.
-		// newPath := filepath.Join("uploads", filename)
-		// err = os.Rename(tempFile.Name(), newPath)
-		// if err != nil {
-		// 	w.WriteHeader(http.StatusInternalServerError)
-		// 	fmt.Fprintf(w, "Error moving file to uploads directory: %v", err)
-		// 	return
-		// }
-		// portwithoutcolun := strings.Replace(port, ":", "", 1)
-		// imageURL := fmt.Sprintf("http://localhost:"+portwithoutcolun+"/uploads/%s", filename)
-		// imageURL = fmt.Sprintf("http://%s/uploads/%s", portwithoutcolun, filename)
-		// if category == "" {
-		// 	apierror := models.APIError{
-		// 		Code:    http.StatusBadRequest,
-		// 		Message: "Category name is required",
-		// 	}
-		// 	w.WriteHeader(apierror.Code)
-		// 	json.NewEncoder(w).Encode(apierror)
-		// 	return
-		// }
-		stmt, err := db.Prepare(`INSERT INTO products (name,category_id,image_url,description,seller,price,highlights,specifications ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8)`)
-		if err != nil {
-			w.WriteHeader(http.StatusInternalServerError)
-			log.Println(w, "Error preparing SQL statement: %v", err)
-			return
+		product := models.Product{
+			Name:           name,
+			CategoryID:     categoryID,
+			ImageURL:       imageURL,
+			Description:    description,
+			Seller:         seller,
+			Price:          price,
+			Highlights:     highlights,
+			Specifications: specifications,
 		}
-		defer stmt.Close()
-		_, err = stmt.Exec(name, category_id, imageURL, description, seller, price, highlights, specifications)
 
-		if err != nil {
+		result := db.Create(&product)
+		if result.Error != nil {
 			w.WriteHeader(http.StatusInternalServerError)
-			fmt.Fprintf(w, "Error executing SQL statement: %v", err)
+			fmt.Fprintf(w, "Error creating product: %v", result.Error)
 			return
 		}
 
+		// Return success response
 		w.WriteHeader(http.StatusCreated)
 		fmt.Fprintf(w, "Product added successfully")
 		json.NewEncoder(w).Encode("added")
 	}
 }
 
-func GetAllProducts(db *sql.DB) http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
+func GetAllProducts(db *gorm.DB) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
 		var products []models.Product
-		// var row_var error
 
-		rows, err := db.Query(`SELECT p.id,p.name,p.category_id,p.image_url,p.description,p.seller,p.price,p.highlights,p.specifications
-								,c.category FROM products p left join category c on(p.category_id=c.id)`)
-
-		if err != nil {
-			http.Error(w, "Error parsing request body", http.StatusBadRequest)
+		result := db.Find(&products)
+		if result.Error != nil {
+			http.Error(w, result.Error.Error(), http.StatusBadRequest)
 			return
 		}
-		defer rows.Close()
 
-		for rows.Next() {
-			var product models.Product
-			row_var := rows.Scan(&product.ID, &product.Name, &product.CategoryID, &product.ImageURL, &product.Description, &product.Seller, &product.Price, &product.Highlights, &product.Specifications,
-				&product.Category.Category)
-			if row_var != nil {
-				log.Fatal(row_var)
-			}
-			products = append(products, product)
-		}
 		json.NewEncoder(w).Encode(products)
-	}
+	})
 }
-func GetAllProductsByCID(db *sql.DB) http.HandlerFunc {
+
+func GetAllProductsByCID(db *gorm.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
+
 		var products []models.Product
-		// var row_var error
+
 		param := mux.Vars(r)
 		id, _ := strconv.Atoi(param["id"])
 
-		rows, err := db.Query(`SELECT p.id,p.name,p.category_id,p.image_url,p.description,p.seller,p.price,p.highlights,p.specifications
-								,c.category FROM products p left join category c on(p.category_id=c.id) where p.category_id=$1`, id)
-
-		if err != nil {
-			http.Error(w, "Error parsing request body", http.StatusBadRequest)
-			return
-		}
-		defer rows.Close()
-
-		for rows.Next() {
-
-			var product models.Product
-			err := rows.Scan(&product.ID, &product.Name, &product.CategoryID, &product.ImageURL, &product.Description, &product.Seller, &product.Price, &product.Highlights, &product.Specifications,
-				&product.Category.Category)
-			if err != nil {
-				apierror := models.APIError{
-					Code:    http.StatusBadRequest,
-					Message: "No such rows with provided id is available!",
-				}
-				w.WriteHeader(apierror.Code)
-				json.NewEncoder(w).Encode(apierror)
-				return
+		result := db.Where("category_id = ?", id).Find(&products)
+		if result.Error != nil {
+			apierror := models.APIError{
+				Code:    http.StatusBadRequest,
+				Message: result.Error.Error(),
 			}
-			products = append(products, product)
+			w.WriteHeader(apierror.Code)
+			json.NewEncoder(w).Encode(apierror)
+			return
 		}
 		json.NewEncoder(w).Encode(products)
 	}
@@ -250,54 +202,23 @@ func GetAllProductsByCID(db *sql.DB) http.HandlerFunc {
 //			w.Write(jsonData)
 //		}
 //	}
-func SearchProducts(db *sql.DB) http.HandlerFunc {
+func SearchProducts(db *gorm.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		query := r.URL.Query().Get("query")
 
 		// Remove spaces from the search query
 		query = strings.ReplaceAll(query, " ", "")
 
-		// Prepare the SQL statement with improved search logic
-		stmt, err := db.Prepare(`
-			SELECT p.id, p.name, p.category_id, p.description, p.image_url, p.seller, p.price, p.highlights, p.specifications,
-			c.id AS category_id, c.category, c.imageurl AS category_imageurl
-			FROM products AS p
-			INNER JOIN category AS c ON p.category_id = c.id
-			WHERE
-				REPLACE(LOWER(c.category), ' ', '') ILIKE $1
-				OR REPLACE(LOWER(p.name), ' ', '') ILIKE $2
-		`)
-		if err != nil {
-			log.Fatal(err)
-		}
-		defer stmt.Close()
-
-		// Execute the SQL statement with the appropriate parameters based on the search criteria
-		queryParam := "%" + query + "%"
-		rows, err := stmt.Query(queryParam, queryParam)
-		if err != nil {
-			log.Fatal(err)
-		}
-		defer rows.Close()
-
 		var products []models.Product
-		for rows.Next() {
-			var product models.Product
-			var category models.Category
-			err := rows.Scan(
-				&product.ID, &product.Name, &product.CategoryID, &product.Description, &product.ImageURL,
-				&product.Seller, &product.Price, &product.Highlights, &product.Specifications,
-				&category.ID, &category.Category, &category.ImageURL,
-			)
 
-			if err != nil {
-				log.Fatal(err)
-			}
-			product.Category = category
-			products = append(products, product)
-		}
-		if err = rows.Err(); err != nil {
-			log.Fatal(err)
+		result := db.
+			Joins("JOIN category ON products.category_id = category.id").
+			Where("REPLACE(LOWER(category.category), ' ', '') LIKE ?", "%"+strings.ToLower(query)+"%").
+			Or("REPLACE(LOWER(products.name), ' ', '') LIKE ?", "%"+strings.ToLower(query)+"%").
+			Find(&products)
+
+		if result.Error != nil {
+			log.Fatal(result.Error)
 		}
 
 		jsonData, err := json.Marshal(products)

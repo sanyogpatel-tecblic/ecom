@@ -23,5 +23,5 @@ func main() {
 	session.Cookie.SameSite = http.SameSiteLaxMode
 	session.Cookie.Secure = app.InProduction
 
-	routes.Routes(&app)
+	routes.Routes()
 }
